@@ -1,5 +1,6 @@
-%ショートカット
+% ショートカット
 e = exp(1);
+% 複素数を変数とさせないため
 clear i
 
 disp("'li'と入力するとコマンド一覧を表示できます");
@@ -29,7 +30,7 @@ switch input_command
         fprintf("bde:\t基本変形行列\n");
         fprintf("gen:\t数列の一般項\n");
         fprintf("quit:\t終了\n\n");
-        m
+        m %再帰
     case 'cmd'
         fprintf("MATLAB 関数一覧\n\n\n");
         fprintf("inv(A):\t\t逆行列\n\n");
@@ -46,7 +47,8 @@ switch input_command
         fprintf("A.':\t\t転置（A'でもできるが、複素ベクトルを扱うときに問題がある）\n\n");
         fprintf("x .* A:\t\t要素それぞれにかける\n\n");
         fprintf("round():\t数値を丸める。√2を10桁に丸める例) round(sqrt(2), 10, 'significant')\n\n");
-        m
+        m　%再帰
+
     case 'inv'
         % 正方行列のサイズの決定
         fprintf('正方行列の行数(=列数)を入力してください');
@@ -63,9 +65,7 @@ switch input_command
         inv_V = inv(V);
 
         % 数式に複素数が含まれる場合
-
         if isreal(inv_V) == false
-            
             fprintf('\n\n数式に複素数が含まれていたので縦書きで表示されます\n\n');
             disp(' ');
             fprintf('\n V ^(-1) ＝ \n\n');
@@ -75,10 +75,9 @@ switch input_command
         end
 
         fprintf('\n \n\n');
-
         yoko = 1; sita = 1;
 
-        % ディスプレイ用に転置しないといけないの?そんなことない
+        % ディスプレイ用に転置しないといけないと思い込んでいた時期がありました。
         DISP_inv_V = inv_V.';
         DISP_inv_V = round( DISP_inv_V , 5);
         % なぜか -0 と表示されるのがきもちわるいので
@@ -90,7 +89,6 @@ switch input_command
 
         % 対角化できないときの処理
         if det(round(V,8)) == 0  %　行列式＝0　→　正則でない　→　対角化できない
-            
             if input_size == 2
             fprintf(" V = | %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita),  DISP_inv_V(yoko+1,sita));
             fprintf("     | %10.5G %10.5G |\n\n\n",DISP_inv_V(yoko,sita+1),DISP_inv_V(yoko+1,sita+1));
@@ -112,7 +110,6 @@ switch input_command
             return;
         end
         if input_size == 2
-
             fprintf("  -1\n");
             fprintf(" V = | %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita),  DISP_inv_V(yoko+1,sita));
             fprintf("     | %10.5G %10.5G |\n\n",DISP_inv_V(yoko,sita+1),DISP_inv_V(yoko+1,sita+1));
@@ -121,7 +118,6 @@ switch input_command
             fprintf(" V = | %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita+1),DISP_inv_V(yoko+1,sita+1),DISP_inv_V(yoko+2,sita+1));
             fprintf("     | %10.5G %10.5G %10.5G |\n\n",DISP_inv_V(yoko,sita+2),DISP_inv_V(yoko+1,sita+2),DISP_inv_V(yoko+2,sita+2));
         elseif input_size == 4
-
             fprintf("  -1 | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita),  DISP_inv_V(yoko+1,sita),  DISP_inv_V(yoko+2,sita),  DISP_inv_V(yoko+3,sita));
             fprintf(" V = | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita+1),  DISP_inv_V(yoko+1,sita+1),  DISP_inv_V(yoko+2,sita+1),  DISP_inv_V(yoko+3,sita+1));
             fprintf("     | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita+2),  DISP_inv_V(yoko+1,sita+2),  DISP_inv_V(yoko+2,sita+2),  DISP_inv_V(yoko+3,sita+2));
@@ -129,6 +125,7 @@ switch input_command
         end
 
         disp(' ');
+
     case 'format'
         value=input('a > ');
         format short
@@ -151,6 +148,7 @@ switch input_command
         keta = -log10(re_error);
         disp('有効桁数:')
         disp(keta)
+
     case 'nerror'
         a=input('真値 > ');
         b=input('近似値 > ');
@@ -399,7 +397,7 @@ switch input_command
             return
         end
         fprintf("\n\n(%d)×(%d)\n\n",first_array,second_array);
-        %     -計算できない場合       
+        % 計算できない場合       
         switch first_array
             case { 1, 2, 3 }
                 length = 1;
@@ -561,6 +559,7 @@ switch input_command
         fprintf("         ||\n\n");
         disp(first_array * second_array);
         fprintf('        \n\n');
+
     case 'gauss'
         fprintf("正方行列 A の行数(=列数)を入力してください\n現状は２、３にしか対応していません。");
         N = input_repeat(0);
@@ -724,12 +723,12 @@ switch input_command
             return
         end
         if N == 3
-            fprintf("3×3の正方行列の対角化可能性の判別は複雑なので現状対応していません。\nテストに出される可能性もなくはないので、追加してほしい方がいればご一報ください。");
+            fprintf("3×3の正方行列の対角化可能性の判別は複雑なので現状対応していません。");
             twitter();
             return;
         end
         if ne(N,2) && ne(N,3)
-            fprintf("ベクトルの次元は２にしか対応してません。ごめんなさい。");
+            fprintf("ベクトルの次元は２にしか対応してません。");
             return
         end
          A = input_A(N,"A");
@@ -783,7 +782,7 @@ switch input_command
                     return
                 end
             
-            % -重解の場合
+            % 重解の場合
             if round(lambda(1,1),8) == round(lambda(2,1),8)
                 lam_A_rank=0;
                 
@@ -812,7 +811,7 @@ switch input_command
                     fprintf(" J = | %3G   1 |\n"  ,lambda(1,1));
                     fprintf("     |   0 %3G | （ジョルダン標準形）\n\n",lambda(2,1));
                 end
-            % -異なる二つの固有値
+            % 異なる二つの固有値
             else
                 lam_A_rank=1;
                 
@@ -825,8 +824,8 @@ switch input_command
                 fprintf(" Λ = | %3G   0 |\n"  ,lambda(1,1));
                 fprintf("     |   0 %3G |\n\n",lambda(2,1));
             end
-           
         end
+
         fprintf('\n           \n\n');
         fprintf("〈注意〉\n");
         fprintf("固有値がλ=-1,-1のように表示されているのに、異なる二つの固有値と表示されることがあります。\n");
@@ -852,6 +851,7 @@ switch input_command
                 fprintf("λ = %Gのとき\n",lambda(2,1));
                 fprintf("rank(A-λI) = %G\n\n",RANK2);
         end
+
     case 'diag'
         fprintf("Aを入力するとAの対角化をしてくれるよ！\n\n");
 
@@ -859,9 +859,9 @@ switch input_command
         fprintf('正方行列の行数(=列数)を入力してください');
 
         input_size = input_repeat(0);
-                if input_size == 'E'
-                    return
-                end
+        if input_size == 'E'
+            return
+        end
 
         A = input_A ( input_size ,"A");
         if A == 'E'
@@ -873,9 +873,7 @@ switch input_command
         Answer = V \ A * V ;
 
         % 数式に複素数が含まれる場合 
-
         if isreal(A) == false || isreal(V) == false || isreal(inv_V) == false || isreal(Answer) == false
-            
             fprintf('\n\n数式に複素数が含まれていたので縦書きになったよ！\n見にくくてごめんね(>_<)\n\n');
             disp('        ');
             fprintf('\n V ^(-1) × A × V ＝ \n\n');
@@ -884,7 +882,6 @@ switch input_command
             disp('        ');
             return;
         end
-        %    -
 
         fprintf('\n        \n\n');
 
@@ -893,7 +890,7 @@ switch input_command
 
         % if V(1,1)*V(2,2)-V(1,2)*V(2,1) == 0
 
-        % ディスプレイ用に転置しないといけないわけではない
+        % ディスプレイ用に転置しないといけないと思っていた。
         DISP_V = V.';
         DISP_inv_V = inv_V.';
         DISP_A = A.';
@@ -903,9 +900,8 @@ switch input_command
         DISP_inv_V = round( DISP_inv_V , 5);
         DISP_A = round( DISP_A , 5);
         DISP_Answer = round( DISP_Answer , 5);
-        %   -  -0 -> 0       
-                % なぜか -0 と表示されるのがきもちわるいので
-                % 0 に変換する。
+
+        % なぜか -0 と表示されるのがきもちわるいので0 に変換する。
         for i=1 : input_size^2
             if DISP_V(i) == 0
                 DISP_V(i) = 0;
@@ -924,9 +920,8 @@ switch input_command
             end
         end
 
-        %  -対角化できないときの処理  
+        % 対角化できないときの処理  
         if det(round(V,8)) == 0  %　行列式＝0　→　正則でない　→　対角化できない
-            
             if input_size == 2
             fprintf(" V = | %10.5G %10.5G |\n"    ,DISP_V(yoko,sita),  DISP_V(yoko+1,sita));
             fprintf("     | %10.5G %10.5G |\n\n\n",DISP_V(yoko,sita+1),DISP_V(yoko+1,sita+1));
@@ -947,7 +942,6 @@ switch input_command
             fprintf("正方行列 A の固有ベクトルを並べて作った行列 V の行列式 ＝ 0\n　　→ 行列 V は正則でない\n　　→ 正方行列 A は対角化できない");
             return;
         end
-        %  - IF input_size = 2    
         if input_size == 2
             fprintf(" V = | %10.5G %10.5G |\n"    ,DISP_V(yoko,sita),  DISP_V(yoko+1,sita));
             fprintf("     | %10.5G %10.5G |\n\n\n",DISP_V(yoko,sita+1),DISP_V(yoko+1,sita+1));
@@ -955,11 +949,10 @@ switch input_command
             fprintf(" V = | %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita),  DISP_inv_V(yoko+1,sita));
             fprintf("     | %10.5G %10.5G |\n\n\n",DISP_inv_V(yoko,sita+1),DISP_inv_V(yoko+1,sita+1));
             fprintf('            V ^(-1)         ×       A       ×              V              ＝ \n\n');
-        fprintf(" | %10.5G %10.5G |  ×  | %3G %3G |  ×  | %10.5G %10.5G |  ＝  | %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G |     | %3G %3G |     | %10.5G %10.5G |      | %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita));
-        disp('                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~');
-        %  - IF input_size = 3    
+            fprintf(" | %10.5G %10.5G |  ×  | %3G %3G |  ×  | %10.5G %10.5G |  ＝  | %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G |     | %3G %3G |     | %10.5G %10.5G |      | %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita));
+            disp('                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~');
         elseif input_size == 3
             fprintf("     | %10.5G %10.5G %10.5G |\n"    ,DISP_V(yoko,sita),  DISP_V(yoko+1,sita),  DISP_V(yoko+2,sita));
             fprintf(" V = | %10.5G %10.5G %10.5G |\n"    ,DISP_V(yoko,sita+1),DISP_V(yoko+1,sita+1),DISP_V(yoko+2,sita+1));
@@ -968,13 +961,12 @@ switch input_command
             fprintf(" V = | %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita+1),DISP_inv_V(yoko+1,sita+1),DISP_inv_V(yoko+2,sita+1));
             fprintf("     | %10.5G %10.5G %10.5G |\n\n\n",DISP_inv_V(yoko,sita+2),DISP_inv_V(yoko+1,sita+2),DISP_inv_V(yoko+2,sita+2));
             fprintf('                 V ^(-1)               ×         A         ×                    V                   ＝ \n\n');
-        fprintf(" | %10.5G %10.5G %10.5G |     | %3G %3G %3G |     | %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G %10.5G |  ×  | %3G %3G %3G |  ×  | %10.5G %10.5G %10.5G |  ＝  | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G %10.5G |     | %3G %3G %3G |     | %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
-        disp('                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-        %  - IF input_size = 4    
+            fprintf(" | %10.5G %10.5G %10.5G |     | %3G %3G %3G |     | %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G %10.5G |  ×  | %3G %3G %3G |  ×  | %10.5G %10.5G %10.5G |  ＝  | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G %10.5G |     | %3G %3G %3G |     | %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita));
+            disp('                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         elseif input_size == 4
             fprintf("     | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_V(yoko,sita),  DISP_V(yoko+1,sita),  DISP_V(yoko+2,sita),  DISP_V(yoko+3,sita));
             fprintf(" V = | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_V(yoko,sita+1),  DISP_V(yoko+1,sita+1),  DISP_V(yoko+2,sita+1),  DISP_V(yoko+3,sita+1));
@@ -985,15 +977,14 @@ switch input_command
             fprintf("     | %10.5G %10.5G %10.5G %10.5G |\n"    ,DISP_inv_V(yoko,sita+2),  DISP_inv_V(yoko+1,sita+2),  DISP_inv_V(yoko+2,sita+2),  DISP_inv_V(yoko+3,sita+2));
             fprintf("     | %10.5G %10.5G %10.5G %10.5G |\n\n\n",DISP_inv_V(yoko,sita+3),  DISP_inv_V(yoko+1,sita+3),  DISP_inv_V(yoko+2,sita+3),  DISP_inv_V(yoko+3,sita+3));
             fprintf('                       V ^(-1)                    ×           A           ×                         V                         ＝ \n\n');
-        fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G %10.5G %10.5G |  ×  | %3G %3G %3G %3G |  ×  | %10.5G %10.5G %10.5G %10.5G |  ＝  | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
-        sita = sita + 1 ;
-        fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
-        disp('                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-        %    
+            fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G %10.5G %10.5G |  ×  | %3G %3G %3G %3G |  ×  | %10.5G %10.5G %10.5G %10.5G |  ＝  | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
+            sita = sita + 1 ;
+            fprintf(" | %10.5G %10.5G %10.5G %10.5G |     | %3G %3G %3G %3G |     | %10.5G %10.5G %10.5G %10.5G |      | %10.5G %10.5G %10.5G %10.5G |　\n",DISP_inv_V(yoko,sita),DISP_inv_V(yoko+1,sita),DISP_inv_V(yoko+2,sita),DISP_inv_V(yoko+3,sita),DISP_A(yoko,sita),DISP_A(yoko+1,sita),DISP_A(yoko+2,sita),DISP_A(yoko+3,sita),DISP_V(yoko,sita),DISP_V(yoko+1,sita),DISP_V(yoko+2,sita),DISP_V(yoko+3,sita),DISP_Answer(yoko,sita),DISP_Answer(yoko+1,sita),DISP_Answer(yoko+2,sita),DISP_Answer(yoko+3,sita));
+            disp('                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         end
         disp('        ');
 
@@ -1001,8 +992,8 @@ switch input_command
         fprintf("i行目とj行目を入れ替える\tP(i,j)\n\n");
         fprintf("i行目の成分を全てc倍する\tQ(i; c)\n\n");
         fprintf("i行目にj行目のc倍を加える\tR(i,j;c)\n\n");
+
     case 'gen'
-        % 線形代数
         % x_{n+2} := c1 * x_{n+1} + c0 * x_n
         fprintf("x_{n+2}  :=  c1  ×  x_{n+1}  ＋  c0  ×  x_n\n\n");
         % c = [co; c1]
@@ -1092,11 +1083,12 @@ switch input_command
         end
     case 'quit'
         disp('bye')
+
     otherwise
         disp('不正なコマンドです')
-        m
-end
+        m %再帰
 
+end
 
 % 正方行列のサイズを入力するとAをインプットして出力する
 function A = input_A (input_size,str)
@@ -1145,7 +1137,7 @@ function A = input_A (input_size,str)
     end
 end
 
-%縦向き一列の配列
+% 縦向き一列の配列
 function XA = input_XA (input_size,str)
 
     if ne(strlength(str),1)
@@ -1171,7 +1163,7 @@ function XA = input_XA (input_size,str)
         fprintf(" %s = ①\n     ②\n     ③\n     ④\n",str);
     
     else
-        fprintf("ベクトルの次元は２か３か４にしか対応してないです！ごめんね(>_<)\n\n");
+        fprintf("ベクトルの次元は２か３か４にしか対応していません。\n\n");
         XA = 'E';
         return
     end
@@ -1190,7 +1182,7 @@ function XA = input_XA (input_size,str)
     end
 end
 
-%横向き一行の配列
+% 横向き一行の配列
 function XB = input_XB (input_size,str)
 
     if ne(strlength(str),1)
@@ -1216,7 +1208,7 @@ function XB = input_XB (input_size,str)
         fprintf(" %s = ① ② ③ ④",str);
     
     else
-        fprintf("ベクトルの次元は２か３か４にしか対応してないです！ごめんね(>_<)\n\n");
+        fprintf("ベクトルの次元は２か３か４にしか対応していません。\n\n");
         XB = 'E';
         return
     end
@@ -1235,12 +1227,12 @@ function XB = input_XB (input_size,str)
     end
 end
 
-%-掃き出し法
-function X = Hakidashi(X,N)  % 掃き出し法
+% 掃き出し法
+function X = Hakidashi(X,N)
     % N は 2 か 3
     
     Y = zeros(N);
-    X = X * 0.00001 * 100000; % aの有効数字を揃える？（笑）
+    X = X * 0.00001 * 100000; % aの有効数字を揃える？
 
     for k = 1 : N
         l = k + 1;
@@ -1267,10 +1259,6 @@ function X = Hakidashi(X,N)  % 掃き出し法
                 if round(X(i,k),4)==1
                     v = 3; %d行目から%d行目を引く　1倍させないため
                     itijikansuu_print(X,k,l,piv,i,v,N);
-                    % ここは必要サナそう
-                    % elseif a(i,k)<0
-                    % fprintf("%d行目から%g倍した%d行目を引く\n",i,round(1/a(i,k),4),k);
-                    % itijikansuu_print(a);
                 else
                     v = 4; %d行目から%g倍した%d行目を引く
                     itijikansuu_print(X,k,l,piv,i,v,N);
@@ -1343,7 +1331,7 @@ function itijikansuu_print(X,k,l,piv,i,v,N)
 end
 
 % 掃き出し法(ランク)
-function X = Hakidashi_seihou(X,N)  % 掃き出し法
+function X = Hakidashi_seihou(X,N)
     % N は 2 か 3
     
     Y = zeros(N);
@@ -1415,7 +1403,7 @@ function X = Hakidashi_seihou(X,N)  % 掃き出し法
     fprintf("\n\n");
 end
 
-%ランク
+% ランク
 function RANK_hanbetu(X,k,l,piv,i,v,N)
     
     ra = round(X,5);
@@ -1473,7 +1461,7 @@ function RANK_hanbetu(X,k,l,piv,i,v,N)
     fprintf("\n\n");
 end
 
-%インプットして空白なら3回入れなおさせる-
+% インプットして空白なら3回入れなおさせる
 % 0:数字　1:文字
 function input_num = input_repeat(n)
     if n == 0
@@ -1483,17 +1471,18 @@ function input_num = input_repeat(n)
     end
     for yycounter = 3 : -1 : 1
         if isempty(input_num) == true
-        fprintf("何か入れなきゃだめだよ！ あと%d回猶予をあげよう(　´∀｀)ヵヵヵ",yycounter);
+        fprintf("何か入れなきゃだめです！ あと%d回猶予があります。",yycounter);
         input_num = input('＞ ');
         end
     end
     if isempty(input_num) == true
-         fprintf("ふざけないでまじめにやってください((o(>皿<)o)) ｷｨｨｨ!!");
+         fprintf("やりなおします。");
          input_num = 'E';
          return;
     end
 end
 
+% FIXME: ランク落ちしているときの判別が網羅されていない可能性が高いです。
 % 正方行列のランクを計算、解が存在するかどうかを出力する
 function RANK_switch(seihou_X,X,N) 
     RANK = rank(seihou_X);
@@ -1519,7 +1508,7 @@ function RANK_switch(seihou_X,X,N)
                 if RANK == 0
                     fprintf("ランクは%dで解が存在しない。零行列です。\n",RANK);
                 elseif ne(RANK,N)
-                    if X(3,4)==0 %対策が必要？
+                    if X(3,4)==0
                         fprintf("ランクは%dで,解が無数に存在する。\n",RANK);
                     else
                         fprintf("ランクは%dで、解が存在しない。\n",RANK);
@@ -1530,7 +1519,7 @@ function RANK_switch(seihou_X,X,N)
     end
 end
 
-%-漸化式に基づく数列の第ｎ項計算 
+% 漸化式に基づく数列の第ｎ項計算 
 % x_{n+2} := c1 * x{n+1} c0 * x_n
 function xn = seq_n(n,c,x)
     temp = [];
@@ -1550,7 +1539,7 @@ function xn = seq_n(n,c,x)
     end
 end
     
-%-実数部＋虚数部をいい感じで出力する 
+% 実数部＋虚数部をいい感じで出力する 
 function fukusosuu_hyoji(P)
     if imag(P) == 0
             fprintf("%6g",round(real(P),4));
